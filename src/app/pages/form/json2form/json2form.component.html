@@ -1,0 +1,36 @@
+<h3>通过JSON配置动态转Form</h3>
+<nz-alert
+  nzType="info"
+  nzMessage="这里的Form指this.form对象，并不是通过配置自动生成表单界面。由于表单中使用的组件种类繁多，要做到通过配置来生成Form界面需要做一定封装，且一不小心会导致界面可维护性差、拓展性差等。建议界面模板先写好，再通过this.form来控制使用哪些模板即可"
+></nz-alert>
+
+<section class="box">
+  <textarea
+    class="textarea"
+    rows="20"
+    nz-input
+    (ngModelChange)="settingChange($event)"
+    [ngModel]="formSetting | json"
+  ></textarea>
+  <div class="right-arrow">
+    <span>formData：</span>
+  </div>
+  <div class="code">
+    <pre>
+    <p>{{ form.getRawValue() | json }}</p>
+  </pre>
+  </div>
+</section>
+
+<section style="width: 1000px; margin-top: 50px">
+  <!-- Form -->
+  <form nz-form [formGroup]="form">
+    <nz-form-item>
+      <nz-form-control [nzOffset]="2">
+        <button nz-button nzType="primary" (click)="addHobby()">
+          向 hobby 里追加
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</section>
