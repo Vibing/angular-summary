@@ -87,4 +87,11 @@ export class Json2formComponent implements OnInit {
       this.service.validatorForm(this.form);
     }
   }
+
+  resetForm() {
+    this.form.reset({});
+    // 调用了 `markFormGroupPristine` 和 `markFormGroupUntouched` 方法来重置表单状态
+    this.service.markFormGroupPristine(this.form);
+    this.service.markFormGroupUntouched(this.form);
+  }
 }

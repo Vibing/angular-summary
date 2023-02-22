@@ -12,7 +12,11 @@ import {
 export class Json2FormService {
   constructor(private fb: FormBuilder) {}
 
-  // 使用递归组成form
+  /**
+   * 使用递归组成form
+   * @param items
+   * @param form
+   */
   addFormItems(items: any[], form: FormGroup) {
     items.forEach((item) => {
       const isRequired = item.isRequired || false;
@@ -99,6 +103,36 @@ export class Json2FormService {
         (control as FormArray).controls.forEach((group: any) => {
           this.validatorForm(group);
         });
+      }
+    });
+  }
+
+  /**
+   * 重置表单Pristine状态
+   * @param formGroup
+   */
+  markFormGroupPristine(formGroup: any) {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.controls[key];
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupPristine(control);
+      } else {
+        control.markAsPristine();
+      }
+    });
+  }
+
+  /**
+   * 重置表单Untouched状态
+   * @param formGroup
+   */
+  markFormGroupUntouched(formGroup: any) {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.controls[key];
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupUntouched(control);
+      } else {
+        control.markAsUntouched();
       }
     });
   }
