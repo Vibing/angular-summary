@@ -36,3 +36,33 @@
     </nz-form-item>
   </form>
 </section>
+
+<form nz-form [formGroup]="bigForm">
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true"> name </nz-form-label>
+    <nz-form-control [nzOffset]="2" nzErrorTip="必填">
+      <input nz-input type="text" formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <ng-container formArrayName="phones">
+    <nz-form-item
+      *ngFor="let item of bigForm.get('phones')?.value; let i = index"
+      [formGroupName]="i"
+    >
+      <nz-form-label [nzRequired]="true">phone</nz-form-label>
+      <nz-form-control [nzOffset]="2" nzErrorTip="必填">
+        <input nz-input type="text" formControlName="number" />
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+</form>
+<button (click)="addPhone()">添加phone</button>
+<button (click)="bigFormSubmit()">提交</button>
+
+<pre>
+  <p>fu:</p>
+  <p>{{jsonData}}</p>
+</pre>
+<hr />
+<app-child [jsonData]="jsonData"></app-child>

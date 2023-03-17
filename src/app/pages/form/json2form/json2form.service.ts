@@ -60,7 +60,7 @@ export class Json2FormService {
       fns.push(Validators.required);
     }
     if (!form.contains(key)) {
-      form.addControl(key, new FormControl(value, fns));
+      form.addControl(key, this.fb.control(value, fns));
     }
   }
 
@@ -77,7 +77,7 @@ export class Json2FormService {
    * @param key arrayName
    */
   addFormArray(key: string, form: FormGroup) {
-    form.addControl(key, new FormArray([]));
+    form.addControl(key, this.fb.array([]));
   }
 
   /**

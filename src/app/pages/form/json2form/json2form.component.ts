@@ -36,6 +36,8 @@ export class Json2formComponent implements OnInit {
     return this.form.get('hobby') as FormArray;
   }
 
+  bigForm: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private service: Json2FormService,
@@ -43,8 +45,17 @@ export class Json2formComponent implements OnInit {
   ) {
     this.form = this.fb.group({});
     // 根据配置生成 Form
-    this.service.addFormItems(this.formSetting, this.form);
+
     (window as any).form = this.form;
+
+    this.service.addFormItems(this.formSetting, this.form);
+
+    this.bigForm = this.fb.group({
+      name: [null, Validators.required],
+      phones: this.fb.array([]),
+    });
+
+    (window as any).bigForm = this.bigForm;
   }
 
   ngOnInit(): void {}
@@ -57,13 +68,9 @@ export class Json2formComponent implements OnInit {
   }
 
   settingChange(value: any) {
-    console.log(value);
-
     this.form = this.fb.group({});
-
     // 更新配置
     this.formSetting = JSON.parse(value);
-
     // 重组
     this.service.addFormItems(this.formSetting, this.form);
     this.cdr.detectChanges();
@@ -94,4 +101,27 @@ export class Json2formComponent implements OnInit {
     this.service.markFormGroupPristine(this.form);
     this.service.markFormGroupUntouched(this.form);
   }
+
+  addPhone() {
+    const arr = this.bigForm.get('phones') as FormArray;
+
+    (this.bigForm.get('phones') as FormArray).push(
+      this.fb.group({
+        number: [
+          { value: arr.length ? null : 123, disabled: !arr.length },
+          Validators.required,
+        ],
+      })
+    );
+  }
+
+  bigFormSubmit() {
+    if (this.bigForm.valid) {
+      const params = this.form.getRawValue();
+    } else {
+      this.service.validatorForm(this.bigForm);
+    }
+  }
+
+  jsonData = 'Jack';
 }
