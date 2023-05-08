@@ -33,18 +33,15 @@ export class DynamicTestComponent implements OnInit {
 
   async loadFeature() {
     const module = await import('../../../customer/customer.module');
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      module.CustomerModule
-    );
-
-    const lazyLoadedModule = moduleFactory.create(this.moduleRef.injector);
-
-    // lazy load component of module
-    const dynamicModuleComponentFactory =
-      lazyLoadedModule.componentFactoryResolver.resolveComponentFactory(
-        InfoComponent
+    const moduleFactory =
+      await this.compiler.compileModuleAndAllComponentsAsync(
+        module.CustomerModule
       );
 
+    const componentFactories = moduleFactory.componentFactories;
+
+    // lazy load component of module
+    const dynamicModuleComponentFactory = componentFactories[0];
     const dynamicInfoComponent = this.container.createComponent(
       dynamicModuleComponentFactory
     );

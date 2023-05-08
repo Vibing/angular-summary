@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
     NzDatePickerModule,
     NzRadioModule,
   ],
-  exports: [],
+  exports: [InfoComponent, JobDirective],
   declarations: [InfoComponent, JobDirective],
   providers: [],
 })
