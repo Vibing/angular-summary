@@ -1,0 +1,5 @@
+<form [formGroup]="form">
+  <select formControlName="name" (ngModelChange)="change($event)">
+    <option *ngFor="let item of list" [value]="item">{{ item }}</option>
+  </select>
+</form>
