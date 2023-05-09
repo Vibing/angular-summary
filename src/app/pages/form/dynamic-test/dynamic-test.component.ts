@@ -10,7 +10,6 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { InfoComponent } from 'src/app/customer/info/info.component';
 import { CustomerModule } from '../../../customer/customer.module';
 
 @Component({
@@ -45,23 +44,6 @@ export class DynamicTestComponent implements OnInit {
     const dynamicInfoComponent = this.container.createComponent(
       dynamicModuleComponentFactory
     );
-    dynamicInfoComponent.instance.name = 'Jack';
-  }
-
-  async loadFeature2() {
-    const module = await import('../../../customer/customer.module');
-    const moduleFactory =
-      await this.compiler.compileModuleAndAllComponentsAsync(
-        module.CustomerModule
-      );
-
-    const dynamicModuleComponentFactory = moduleFactory.componentFactories.find(
-      (component) => component.componentType === InfoComponent
-    );
-
-    const dynamicInfoComponent = this.container.createComponent(
-      dynamicModuleComponentFactory as ComponentFactory<any>
-    );
-    dynamicInfoComponent.instance.name = 'Jack';
+    dynamicInfoComponent.instance.name = 'Jack222333';
   }
 }
